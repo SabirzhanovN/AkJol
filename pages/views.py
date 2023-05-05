@@ -16,6 +16,17 @@ def index(request):
     return render(request, 'pages/index.html', data)
 
 
+def detail(request, id):
+    queryset = Public.objects.get(id=id)
+    images = Image.objects.filter(public_id=queryset)
+
+    data = {
+        'public': queryset,
+        'images': images
+    }
+    return render(request, 'pages/detail.html', data)
+
+
 def create(request):
     if request.method == 'POST':
         images = []

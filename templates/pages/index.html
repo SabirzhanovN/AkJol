@@ -11,6 +11,7 @@
             <p>{{ img.image.url }}</p>
         {% endif %}
       {% endfor %}
+        <a href="{% url 'detail' public.id %}">Detail</a>
         <br><br>
   {% endfor %}
 {% endblock %}

@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+
+{% block 'content' %}
+
+  <p>{{ public.user_id }}</p>
+  <p>{{ public.title }}</p>
+  <p>{{ public.description }}</p>
+  <p>{{ public.address }}</p>
+  {% if images %}
+    {% for image in images %}
+      <p>{{ image.image.url }}</p>
+    {% endfor %}
+  {% endif %}
+<br><br><br>
+<!-- Form for Comment  -->
+
+  {% if user.is_authenticated %}
+    <form action="{% url 'review_create' %}" method="post">
+      {% csrf_token %}
+      <input type="text" name="commit" placeholder="comment">
+
+      <input type="number" value="{{ user.id }}" name="user_id">
+      <input type="text" value="{{ public.id }}" name="public_id">
+
+      <input type="submit" value="Submit">
+    </form>
+  {% else %}
+    <h2>Register for comment public</h2>
+  {% endif %}
+
+{% endblock  %}
