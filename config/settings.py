@@ -30,6 +30,7 @@ INSTALLED_APPS = [
 
     # apps
     'pages.apps.PagesConfig',
+    'accounts.apps.AccountsConfig',
 
     # frameworks
     'rest_framework'

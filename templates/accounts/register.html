@@ -1,0 +1,19 @@
+{% extends 'main.html' %}
+
+{% block 'content' %}
+
+<form action="{% url 'register' %}" method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+
+    <input type="text" name="first_name" placeholder="first_name">
+    <input type="text" name="last_name" placeholder="last_name">
+    <input type="text" name="username" placeholder="username">
+    <input type="text" name="email" placeholder="email">
+    <input type="file" name="password1" placeholder="pswd1">
+    <input type="file" name="password2" placeholder="pswd2">
+
+    <input type="submit">
+
+</form>
+
+{% endblock %}
