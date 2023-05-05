@@ -29,7 +29,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     # apps
-    'publics.apps.PublicsConfig',
+    'pages.apps.PagesConfig',
 
     # frameworks
     'rest_framework'
