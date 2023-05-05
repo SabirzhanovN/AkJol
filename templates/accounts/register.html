@@ -1,19 +1,32 @@
 {% extends 'main.html' %}
 
 {% block 'content' %}
-
-<form action="{% url 'register' %}" method="post" enctype="multipart/form-data">
-    {% csrf_token %}
-
-    <input type="text" name="first_name" placeholder="first_name">
-    <input type="text" name="last_name" placeholder="last_name">
-    <input type="text" name="username" placeholder="username">
-    <input type="text" name="email" placeholder="email">
-    <input type="file" name="password1" placeholder="pswd1">
-    <input type="file" name="password2" placeholder="pswd2">
-
-    <input type="submit">
-
-</form>
-
+    <form action="{% url 'register' %}" method="POST">
+        {% csrf_token%}
+        <div class="form-group">
+          <label for="first_name">First Name</label>
+          <input type="text" name="first_name" class="form-control" required>
+        </div>
+        <div class="form-group">
+          <label for="last_name">Last Name</label>
+          <input type="text" name="last_name" class="form-control" required>
+        </div>
+        <div class="form-group">
+          <label for="username">Username</label>
+          <input type="text" name="username" class="form-control" required>
+        </div>
+        <div class="form-group">
+          <label for="email">Email</label>
+          <input type="email" name="email" class="form-control" required>
+        </div>
+        <div class="form-group">
+          <label for="password1">Password</label>
+          <input type="password" name="password1" class="form-control" required>
+        </div>
+        <div class="form-group">
+          <label for="password2">Confirm Password</label>
+          <input type="password" name="password2" class="form-control" required>
+        </div>
+        <input type="submit" value="Register" class="btn btn-secondary btn-block">
+  </form>
 {% endblock %}
