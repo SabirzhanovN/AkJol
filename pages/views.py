@@ -5,7 +5,15 @@ from pages.models import Public, Image
 
 
 def index(request):
-    return render(request, 'pages/index.html')
+    publics = Public.objects.all()
+    images = Image.objects.all()
+
+    data = {
+        'publics': publics,
+        'images': images
+    }
+
+    return render(request, 'pages/index.html', data)
 
 
 def create(request):

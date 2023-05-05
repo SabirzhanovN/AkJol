@@ -1,5 +1,16 @@
 {% extends 'base.html' %}
 
 {% block 'content' %}
-  <h1>Hello world(listings)</h1>
+  {% for public in publics %}
+      <p>{{ public.title }}</p>
+      <p>{{ public.description }}</p>
+      <p>{{ public.address }}</p>
+      <p>{{ public.user_id }}</p>
+      {% for img in images %}
+        {% if img.public_id == public %}
+            <p>{{ img.image.url }}</p>
+        {% endif %}
+      {% endfor %}
+        <br><br>
+  {% endfor %}
 {% endblock %}
