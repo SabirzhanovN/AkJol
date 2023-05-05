@@ -11,8 +11,13 @@ class Public(models.Model):
 
     user_id = models.ForeignKey(User, related_name='users', on_delete=models.CASCADE)
 
+    def __str__(self):
+        return self.title
+
 
 class Image(models.Model):
     image = models.ImageField(upload_to='Images', null=True, blank=True)
     public_id = models.ForeignKey(Public, related_name='images', on_delete=models.CASCADE)
 
+    def __str__(self):
+        return self.image
