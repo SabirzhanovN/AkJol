@@ -1,16 +1,35 @@
 from django.contrib.auth.models import User
 from django.shortcuts import render
+from django.core.paginator import Paginator
 
 from pages.models import Public, Image
+from reviews.models import Review
 
 
 def index(request):
     publics = Public.objects.all()
-    images = Image.objects.all()
 
+    l = []
+    for i in publics:
+
+        q_dict = {
+            'id': i.id,
+            'user': str(i.user_id),
+            'title': i.title,
+            'description': i.description,
+            'created_at': i.created_at,
+            'user_id': i.user_id,
+            'images': Image.objects.filter(public_id=i.id),
+            'review_cnt': len(Review.objects.filter(public_id=i.id))
+        }
+
+        l.append(q_dict)
+
+    paginator = Paginator(l, 8)
+    page = request.GET.get('page')
+    paged_public = paginator.get_page(page)
     data = {
-        'publics': publics,
-        'images': images
+        'publics': paged_public
     }
 
     return render(request, 'pages/index.html', data)
@@ -19,10 +38,13 @@ def index(request):
 def detail(request, id):
     queryset = Public.objects.get(id=id)
     images = Image.objects.filter(public_id=queryset)
+    reviews = Review.objects.filter(public_id=queryset)
 
     data = {
         'public': queryset,
-        'images': images
+        'images': images,
+        'user_': str(queryset.user_id),
+        'reviews': reviews
     }
     return render(request, 'pages/detail.html', data)
 
@@ -58,3 +80,7 @@ def create(request):
             image_for.save()
 
     return render(request, 'pages/create.html')
+
+
+def map(request):
+    return render(request, 'pages/map.html')

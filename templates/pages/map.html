@@ -1,0 +1,72 @@
+{% extends 'base.html' %}
+
+{% block 'content' %}
+    <div id="map"> </div>
+    <script>
+        var citymap = {
+            too_ashuu:{
+                center: { lat: 42.343132,  lng: 73.812647 },
+                population: 6000000,
+            },
+            boom:{
+                center: { lat: 42.578049,   lng: 75.805235 },
+                population: 5000000,
+            },
+            dolon:{
+                center: { lat: 41.840184,   lng: 75.742407 },
+                population: 3500000,
+            },
+        }
+        function initMap(){
+            var pos = {lat:42.84034296774677,  lng:74.60220483990494  }
+            var opt = {
+                center : pos,
+                zoom:14,
+                mapTypeId: "terrain",
+            }
+            var map = new google.maps.Map(document.getElementById("map"),opt)
+
+            var marker = new google.maps.Marker({
+                position: pos,
+                map: map,
+                title: "Дорожные работы",
+                icon: "https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png"
+            });
+
+            var info = new google.maps.InfoWindow({
+                content: '<h3>Дорожные работы</h3><p>Подрядчик: ОсОО Жол-Торо</p>'
+            })
+
+            marker.addListener('click',function(){
+                info.open(map,marker)
+            });
+
+            for (const city in citymap){
+                const cityCircle = new google.maps.Circle({
+                    strokeColor: "#FF0000",
+                    strokeOpacity: 0.8,
+                    strokeWeight: 2,
+                    fillColor: "#FF0000",
+                    fillOpacity: 0.35,
+                    map,
+                    center: citymap[city].center,
+                    radius: Math.sqrt(citymap[city].population) * 10
+                });
+            }
+            var info1 = new google.maps.InfoWindow({
+                content: '<h3>Опасная дорога</h3><p>Лавины</p>'
+            })
+
+            marker.addListener('click',function(){
+                info1.open(map,citymap)
+            });
+
+
+        }
+
+    </script>
+    <script
+      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA80-OvcwnLbTq7I82dUtqZQNBI71RN3SY&callback=initMap&v=weekly"
+      async defer
+    ></script>
+{% endblock %}
