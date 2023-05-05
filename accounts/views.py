@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
-from django.contrib import messages, auth
+from django.contrib import auth
 
 
 def register(request):
@@ -19,7 +19,7 @@ def register(request):
                 if User.objects.filter(email=email).exists():
                     return redirect('register')
                 else:
-                    new_user = User.objects.create(
+                    new_user = User.objects.create_user(
                         first_name=first_name,
                         last_name=last_name,
                         username=username,
@@ -41,14 +41,12 @@ def login(request):
         username = request.POST['username']
         password = request.POST['password']
 
-        print(username, password)
-
         user = auth.authenticate(
             username=username,
             password=password
         )
-        print(user)
-        if user:
+
+        if user is not None:
             auth.login(request, user)
             return redirect('create')
         else:
@@ -58,6 +56,5 @@ def login(request):
 
 
 def logout(request):
-    if request.method == 'POST':
-        auth.logout(request)
-        return redirect('register')
+    auth.logout(request)
+    return redirect('register')

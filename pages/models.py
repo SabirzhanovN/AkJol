@@ -20,4 +20,4 @@ class Image(models.Model):
     public_id = models.ForeignKey(Public, related_name='images', on_delete=models.CASCADE)
 
     def __str__(self):
-        return self.image
+        return str(self.image)

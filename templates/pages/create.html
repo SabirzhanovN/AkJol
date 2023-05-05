@@ -1,17 +1,30 @@
-{% extends 'main.html' %}
+{% extends 'base.html' %}
 
 {% block 'content' %}
 
-<form action="{% url 'create' %}" method="post" enctype="multipart/form-data">
-    {% csrf_token %}
+    {% if user.is_authenticated %}
 
-    <input type="text" name="title" placeholder="title">
-    <input type="text" name="description" placeholder="description">
-    <input type="text" name="address" placeholder="address">
-    <input type="file" name="image">
+        <form action="{% url 'create' %}" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
 
-    <input type="number" name="user_id" placeholder="user_id">
+            <input type="text" name="title" placeholder="title" required>
+            <input type="text" name="description" placeholder="description" required>
+            <input type="text" name="address" placeholder="address" required>
 
-</form>
+            <br><br>
+            <input type="file" name="image1">
+            <input type="file" name="image2">
+            <input type="file" name="image3">
+
+            <br><br>
+            <input type="number" name="user_id" value="{{ user.id }}">
+
+            <br>
+            <input type="submit" value="create">
+
+        </form>
+    {% else %}
+        <h1>Register now</h1>
+    {% endif %}
 
 {% endblock %}
