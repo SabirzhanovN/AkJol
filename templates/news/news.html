@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+
+{% block 'content' %}
+<div class="container mt-5 mb-5">
+    <div class="jumbotron">
+	<div class="row">
+		<div class="col-md-6 offset-md-3">
+			<h4>Последние новости</h4>
+			<ul class="timeline">
+                {% for news in data %}
+                    <li>
+                        <a target="_blank" href="#">{{ news.title }}</a>
+                        <a href="#" class="float-right">{{ news.created_at }}</a>
+                        <p>{{ news.description }}</p>
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <img src="{{ news.image_main.url }}" alt="" style="max-width: 120px; height: 80px">
+                            </div>
+                            {% if news.image_1 %}
+                                <div class="col-sm-3">
+                                    <img src="{{ news.image_1.url }}" alt="" style="max-width: 120px; height: 80px">
+                                </div>
+                            {% endif %}
+                            {% if news.image_2 %}
+                                <div class="col-sm-3">
+                                    <img src="{{ news.image_2.url }}" alt="" style="max-width: 120px; height: 80px">
+                                </div>
+                            {% endif %}
+                            <div class="col-sm-3">
+                                <p>Руководитель: <br>{{ news.company_id }}</p>
+                            </div>
+                        </div>
+                    </li>
+                <br>
+                {% endfor %}
+			</ul>
+		</div>
+	</div>
+    </div>
+</div>
+{% endblock %}

@@ -48,7 +48,7 @@ def login(request):
 
         if user is not None:
             auth.login(request, user)
-            return redirect('create')
+            return redirect('index')
         else:
             return redirect('login')
 
@@ -57,4 +57,4 @@ def login(request):
 
 def logout(request):
     auth.logout(request)
-    return redirect('register')
+    return redirect('login')

@@ -1,5 +1,5 @@
 from django.contrib.auth.models import User
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.core.paginator import Paginator
 
 from pages.models import Public, Image
@@ -7,7 +7,17 @@ from reviews.models import Review
 
 
 def index(request):
-    publics = Public.objects.all()
+    publics = Public.objects.order_by('-created_at')
+
+    if 'address' in request.GET:
+        address = request.GET['address']
+        if address:
+            publics = publics.filter(address__icontains=address)
+
+    if 'description' in request.GET:
+        description = request.GET['description']
+        if description:
+            publics = publics.filter(description__icontains=description)
 
     l = []
     for i in publics:
@@ -20,7 +30,8 @@ def index(request):
             'created_at': i.created_at,
             'user_id': i.user_id,
             'images': Image.objects.filter(public_id=i.id),
-            'review_cnt': len(Review.objects.filter(public_id=i.id))
+            'review_cnt': len(Review.objects.filter(public_id=i.id)),
+            'likes': i.likes
         }
 
         l.append(q_dict)
@@ -28,6 +39,7 @@ def index(request):
     paginator = Paginator(l, 8)
     page = request.GET.get('page')
     paged_public = paginator.get_page(page)
+
     data = {
         'publics': paged_public
     }
@@ -44,12 +56,20 @@ def detail(request, id):
         'public': queryset,
         'images': images,
         'user_': str(queryset.user_id),
-        'reviews': reviews
+        'reviews': reviews,
+        'cnt_review': len(Review.objects.filter(public_id=queryset.id))
     }
     return render(request, 'pages/detail.html', data)
 
 
-def create(request):
+def add_like(request, id):
+    public = Public.objects.get(id=id)
+    public.likes = public.likes + 1
+    public.save()
+    return redirect('detail', id)
+
+
+def mapping(request):
     if request.method == 'POST':
         images = []
         if request.FILES:
@@ -80,7 +100,3 @@ def create(request):
             image_for.save()
 
     return render(request, 'pages/create.html')
-
-
-def map(request):
-    return render(request, 'pages/map.html')

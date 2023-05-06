@@ -22,4 +22,4 @@ def create(request):
         )
 
         new_review.save()
-        return redirect('create')
+        return redirect('detail', public_id)

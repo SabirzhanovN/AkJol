@@ -5,6 +5,6 @@ from . import views
 urlpatterns = [
     path('', views.index, name='index'),
     path('detail/<int:id>/', views.detail, name='detail'),
-    path('create/', views.create, name='create'),
-    path('map/', views.map, name='map')
+    path('mapping/', views.mapping, name='mapping'),
+    path('add_like/<int:id>/', views.add_like, name='add_like')
 ]

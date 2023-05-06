@@ -11,6 +11,8 @@ class Public(models.Model):
 
     user_id = models.ForeignKey(User, related_name='users', on_delete=models.CASCADE)
 
+    likes = models.IntegerField(default=0, null=True, blank=True)
+
     class Meta:
         verbose_name = 'Public'
         verbose_name_plural = 'Publics'

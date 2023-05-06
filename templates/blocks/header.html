@@ -14,10 +14,10 @@
                 </a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="#">Лента</a>
+                <a class="nav-link" href="{% url 'mapping' %}">Карта</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="#">Новости</a>
+                <a class="nav-link" href="{% url 'news' %}">Новости</a>
               </li>
               <li class="nav-item">
                 <a class="nav-link" href="#">Контакты</a>
@@ -25,12 +25,22 @@
               <li class="nav-item">
                 <a class="nav-link" href="#">О нас</a>
               </li>
-              <li class="nav-item">
-                <a class="nav-link" href="{% url 'login' %}">Войти</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="{% url 'register' %}">Регистрация</a>
-              </li>
+
+              {% if user.is_authenticated %}
+                <li class="nav-item">
+                    <a class="nav-link" href="#">{{ user.username }}</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'logout' %}">logout</a>
+                </li>
+              {% else %}
+                <li class="nav-item">
+                  <a class="nav-link" href="{% url 'login' %}">Войти</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="{% url 'register' %}">Регистрация</a>
+                </li>
+              {% endif %}
             </ul>
           </div>
         </div>
